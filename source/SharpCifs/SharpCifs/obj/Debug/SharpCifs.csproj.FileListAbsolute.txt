@@ -1,0 +1,10 @@
+C:\Users\breens\Documents\Visual Studio 2013\Projects\SharpCifs\SharpCifs\Bin\Debug\SharpCifs.dll
+C:\Users\breens\Documents\Visual Studio 2013\Projects\SharpCifs\SharpCifs\Bin\Debug\SharpCifs.pdb
+C:\Users\breens\Documents\Visual Studio 2013\Projects\SharpCifs\SharpCifs\obj\Debug\SharpCifs.dll
+C:\Users\breens\Documents\Visual Studio 2013\Projects\SharpCifs\SharpCifs\obj\Debug\SharpCifs.pdb
+C:\Users\breens\documents\visual studio 2013\Projects\SharpCifs\SharpCifs\obj\Debug\SharpCifs.csprojResolveAssemblyReference.cache
+\\vmware-host\Shared Folders\Potato\source\SharpCifs\SharpCifs\Bin\Debug\SharpCifs.dll
+\\vmware-host\Shared Folders\Potato\source\SharpCifs\SharpCifs\Bin\Debug\SharpCifs.pdb
+\\vmware-host\Shared Folders\Potato\source\SharpCifs\SharpCifs\obj\Debug\SharpCifs.csprojResolveAssemblyReference.cache
+\\vmware-host\Shared Folders\Potato\source\SharpCifs\SharpCifs\obj\Debug\SharpCifs.dll
+\\vmware-host\Shared Folders\Potato\source\SharpCifs\SharpCifs\obj\Debug\SharpCifs.pdb

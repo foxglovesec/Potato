@@ -1,0 +1,5 @@
+C:\Users\breens\Documents\Visual Studio 2013\Projects\NHttp\NHttp\bin\Debug\NHttp.dll
+C:\Users\breens\Documents\Visual Studio 2013\Projects\NHttp\NHttp\bin\Debug\NHttp.pdb
+C:\Users\breens\Documents\Visual Studio 2013\Projects\NHttp\NHttp\obj\Debug\NHttp.dll
+C:\Users\breens\Documents\Visual Studio 2013\Projects\NHttp\NHttp\obj\Debug\NHttp.pdb
+C:\Users\breens\documents\visual studio 2013\Projects\NHttp\NHttp\obj\Debug\NHttp.csprojResolveAssemblyReference.cache
