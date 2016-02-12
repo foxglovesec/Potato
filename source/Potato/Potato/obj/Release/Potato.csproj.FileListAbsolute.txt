@@ -28,10 +28,7 @@ J:\Potato\source\Potato\Potato\bin\Release\SharpCifs.dll
 J:\Potato\source\Potato\Potato\bin\Release\NHttp.pdb
 J:\Potato\source\Potato\Potato\bin\Release\SharpCifs.pdb
 J:\Potato\source\Potato\Potato\obj\Release\Potato.csprojResolveAssemblyReference.cache
-<<<<<<< HEAD
 F:\Potato\source\Potato\Potato\bin\Release\Potato.exe.config
-F:\Potato\source\Potato\Potato\obj\Release\Potato.exe
-F:\Potato\source\Potato\Potato\obj\Release\Potato.pdb
 F:\Potato\source\Potato\Potato\bin\Release\Potato.exe
 F:\Potato\source\Potato\Potato\bin\Release\Potato.pdb
 F:\Potato\source\Potato\Potato\bin\Release\NHttp.dll
@@ -39,5 +36,5 @@ F:\Potato\source\Potato\Potato\bin\Release\SharpCifs.dll
 F:\Potato\source\Potato\Potato\bin\Release\NHttp.pdb
 F:\Potato\source\Potato\Potato\bin\Release\SharpCifs.pdb
 F:\Potato\source\Potato\Potato\obj\Release\Potato.csprojResolveAssemblyReference.cache
-=======
->>>>>>> a80fdfbf7cbef7ae601d584bf185afc7c211099c
+F:\Potato\source\Potato\Potato\obj\Release\Potato.exe
+F:\Potato\source\Potato\Potato\obj\Release\Potato.pdb
