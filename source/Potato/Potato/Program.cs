@@ -63,7 +63,7 @@ namespace Potato
 
                 if (request.HttpMethod.ToLower().Equals("head") || request.HttpMethod.ToLower().Equals("get") || request.HttpMethod.ToLower().Equals("post") || request.HttpMethod.ToLower().Equals("options") || request.HttpMethod.ToLower().Equals("put"))
                 {
-                    if (request.Url.AbsoluteUri.ToString().Contains("localhost/GETHASHES"))
+                    if (request.Url.AbsoluteUri.ToString().Contains("GETHASHES"))
                     {
                         Console.WriteLine("Sending 401...");
                         if (headers["Authorization"] == null && workingUri == null)
