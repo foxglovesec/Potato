@@ -84,4 +84,4 @@ Bugs should be reported through github at
 
 ## License
 
-NHttp is licensed under the LGPL 3.
+NHttp is licensed under the LGPL 3
